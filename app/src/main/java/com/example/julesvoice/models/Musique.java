@@ -1,6 +1,4 @@
-package com.example.julesvoice.classes;
-
-import android.graphics.drawable.Drawable;
+package com.example.julesvoice.models;
 
 public class Musique
 {

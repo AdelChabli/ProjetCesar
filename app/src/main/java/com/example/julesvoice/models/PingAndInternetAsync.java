@@ -1,9 +1,11 @@
-package com.example.julesvoice.classes;
+package com.example.julesvoice.models;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+
+import com.example.julesvoice.interfaces.PingAndInternetListener;
 
 public class PingAndInternetAsync extends AsyncTask<Void, Void, Void>
 {

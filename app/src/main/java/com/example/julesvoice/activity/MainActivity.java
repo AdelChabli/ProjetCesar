@@ -1,4 +1,4 @@
-package com.example.julesvoice;
+package com.example.julesvoice.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,8 +15,9 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.julesvoice.classes.PingAndInternetAsync;
-import com.example.julesvoice.classes.PingAndInternetListener;
+import com.example.julesvoice.R;
+import com.example.julesvoice.models.PingAndInternetAsync;
+import com.example.julesvoice.interfaces.PingAndInternetListener;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 

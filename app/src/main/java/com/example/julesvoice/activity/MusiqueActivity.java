@@ -1,4 +1,4 @@
-package com.example.julesvoice;
+package com.example.julesvoice.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -10,6 +10,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.example.julesvoice.R;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 

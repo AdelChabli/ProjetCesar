@@ -1,4 +1,4 @@
-package com.example.julesvoice.classes;
+package com.example.julesvoice.models;
 
 import android.content.Context;
 import android.media.AudioFormat;
@@ -6,6 +6,8 @@ import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.os.Environment;
 import android.util.Base64;
+
+import com.example.julesvoice.interfaces.PingAndInternetListener;
 
 import org.apache.commons.io.FileUtils;
 

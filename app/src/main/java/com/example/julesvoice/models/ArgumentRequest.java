@@ -1,4 +1,4 @@
-package com.example.julesvoice.classes;
+package com.example.julesvoice.models;
 
 public class ArgumentRequest
 {

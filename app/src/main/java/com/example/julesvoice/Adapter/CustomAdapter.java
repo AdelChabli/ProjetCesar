@@ -1,4 +1,4 @@
-package com.example.julesvoice.classes;
+package com.example.julesvoice.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.julesvoice.R;
+import com.example.julesvoice.models.Musique;
 
 import java.util.ArrayList;
 

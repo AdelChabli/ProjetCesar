@@ -1,4 +1,4 @@
-package com.example.julesvoice.classes;
+package com.example.julesvoice.interfaces;
 
 // https://stackoverflow.com/questions/19229204/android-waiting-for-response-from-server
 
