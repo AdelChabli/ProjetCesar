@@ -1,4 +1,4 @@
-package com.example.julesvoice.Adapter;
+package com.example.julesvoice.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
