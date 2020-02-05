@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Cesar</string>
+    <string name="page_record">Assistant vocale</string>
+    <string name="image_name">imageRecord</string>
+</resources>
