@@ -51,7 +51,7 @@ public class AccueilActivity extends AppCompatActivity implements PingAndInterne
                 permissionToRecordAccepted  = grantResults[0] == PackageManager.PERMISSION_GRANTED;
                 break;
         }
-        if (!permissionToRecordAccepted )
+        if (!permissionToRecordAccepted)
         {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                 finishAffinity();

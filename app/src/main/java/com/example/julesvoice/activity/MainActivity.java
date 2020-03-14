@@ -120,7 +120,8 @@ public class MainActivity extends AppCompatActivity implements PingAndInternetLi
     // Permet d'aller sur la page d'accueil
     private void changePage()
     {
-        Intent i = new Intent(MainActivity.this,AccueilActivity.class);
+        //Intent i = new Intent(MainActivity.this,AccueilActivity.class);
+        Intent i = new Intent(MainActivity.this,LectureMusiqueActivity.class);
         startActivity(i);
     }
 
