@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -22,6 +23,10 @@ import java.util.Map;
 
 public class ServerRequest
 {
+    private LogApp log = LogApp.getInstance();
+    public static final String LOG = "appLog";
+    //public static final String URL_SERVER_SPEECH= "http://pedago.univ-avignon.fr:3012/speechToText";
+    public static final String URL_SERVER_SPEECH = "http://localhost:8085/speechToText";
     private Context _context;
     private PingAndInternetListener callback;
     private int _id;
@@ -92,21 +97,33 @@ public class ServerRequest
 
     public void ping(String urlPing)
     {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, urlPing, new Response.Listener<String>() {
+        int requestMethod = Request.Method.GET;
+
+        if(requestMethod == Request.Method.GET)
+            log.createLog("/GET: " + urlPing);
+        else if(requestMethod == Request.Method.POST)
+            log.createLog("/POST: " + urlPing);
+        else
+            log.createLog("Error ping request ServerRequest");
+
+
+        StringRequest stringRequest = new StringRequest(requestMethod, urlPing, new Response.Listener<String>() {
             @Override
             public void onResponse(String response)
             {
+                log.createLog("Ping réussi");
                 callback.onPingCompleted();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error)
             {
+                log.createLog("Ping échoué");
                 callback.onPingFailed();
             }
         });
 
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(2000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(5000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         RequestQueue requestQueue = Volley.newRequestQueue(_context);
         requestQueue.add(stringRequest);

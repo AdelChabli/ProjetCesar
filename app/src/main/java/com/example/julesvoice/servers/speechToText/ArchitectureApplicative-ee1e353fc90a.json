@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "architectureapplicative",
+  "private_key_id": "ee1e353fc90abae3da613688d0aad9d796595f8b",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCDX9Ye05i1OfnI\n77ABQ8nPz07tQGYJjGWerwLrlAvF3CS9o+Jcw4M4Wo6gWd7g5NTcN51bEXcZE2qn\nzVbYrnvQuk/tePv+OtVR+rY8jTRwAuGBfQJQE1wTf3Jf/gUGETeZMH3QK0DKCcrV\njxW9BBYv27BZXEuGXodmKP7EQ00Vrpoo5Is6IStFACc7DQMZLwlXfrMl5X8SG0Ar\n3JBrPT+ePnz9p5erBtbOvCMjOPW4J33GhmE4nbzImGOTgL5nHEKsB+4O6VMc+A8O\nHhaxyE1MdadUPlB8c4X6m2iRyst9S4RObDyfCYiAitpwgEoENnkXNvAH1NZ7Zrrz\n64YALE3lAgMBAAECggEAK1UCirNvZKNFTO4mJxylZbpyxZWeslqRMCh4tZxkz7Pf\nmH+ES+WfFAjmj2RlO9eukB519BJMLsS1Qrjbguf2Ze/2KhVkRMRCFWK1Fj7bA3En\n0W6awy/HiJTadGgUXx5xsMEKVo3Vtm5JbWxfFrPQ36M+RRNIw/7M+TjfY3vxYot2\nSDAZMj62pNwMf/PHYncu4axUHXda/5ltPC30iyO0BE8C08Nb1mP+NbkH7AJvmEp2\nYeeA+WGrM/CeJAp5W5vUl1nZKsv4AvLAbeTUXopN4RDJVldM5AhOzIdop7KkvlaZ\nft+tyaIm5oUnQjOwMOb5vYI19G/KwG7Eez9rVNTMBwKBgQC5Ze9bCD86KUr+8xeX\nVlMNYVt1zAuNLiHttZfLsL0c9Guyuw9T3DwjwZ/HJtgxOxG7VReZUMSn7fsqMe3P\nMIVU33Bt5wbsoF8te7R2kSfwDEd4wb4OjkKGrHfE+RqpAzckMJXhsRt1SK1OfiXR\nBsZIF3a0RxaAHAdKG378o1gCrwKBgQC1ZzyVgAQ9ap6xdlNs1gIht9F9xDS8+LMg\nN7Zx5hjOGYS7h8W3Y/7Rg6eHQMiiNPk13VoFmiPEYXzyFGSeUGYTMNF0AmBo+YSV\ngoEwhz+J1yUESTjWNdOAFfjlbGR0NEw3XB9btpheSCSI+dIoQy85243QJ0IA43YY\n2+488CJtqwKBgBRJ93u611CCHFbyO26wX75jHSMzBUCZ/9SHvujnmoqEpRSWLAM9\nYsd29QlSUu5wTGx3z3FTyXGnNYlUlXXLFYxIN4GPes6CbmgH1aP0Fq7KaTfp2+az\n4sviK+k+aZB9bZdkScK9Iwgev/iLDZBmcWSKTM9FyEyUxKdzgt4a8hK5AoGAHFUv\nhTolb2JDvvv4M7uJQbLwKXCHvCwr7hBFkqyZmzcpIBEotGgN2LNzaxCXRZ54fg1A\njjdw9q8zUKwWuxNbngu16ySj4kF2j9N+UhINvn237l9xXSOzEQJdiZfQaMXyUYM1\n8qEmUzN5YVuDk35K1gKQt74p9PGR9HgFUcc/2VkCgYBMqqjBY2N54duSmuDeh6iG\n0e7LA10AEYUBQtaD22YmwFei89Rj3MSrrTNn2ggeLwjH9ooHsplpxY3vkOKbJ1l/\n9YBf+DMW9PMLXJ8SdKXswVnFP38UK9clacDfeiLC0ddpbzo4Jslig+iD4VVA9DyW\nlftkJs/tE2HBzcm+5gH55g==\n-----END PRIVATE KEY-----\n",
+  "client_email": "test-716@architectureapplicative.iam.gserviceaccount.com",
+  "client_id": "107649918429221602500",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/test-716%40architectureapplicative.iam.gserviceaccount.com"
+}

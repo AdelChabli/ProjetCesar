@@ -11,11 +11,13 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.julesvoice.R;
+import com.example.julesvoice.models.LogApp;
 import com.example.julesvoice.models.PingAndInternetAsync;
 import com.example.julesvoice.interfaces.PingAndInternetListener;
 
@@ -23,6 +25,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class MainActivity extends AppCompatActivity implements PingAndInternetListener
 {
+    private LogApp log = LogApp.getInstance();
     private static final boolean MODE_PROGRAMMATEUR = true;
     int maxServer = 3;
     private int id = 0;
@@ -38,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements PingAndInternetLi
         textLoad = findViewById(R.id.textLoad);
         progressBar = findViewById(R.id.progressBarIntro);
 
+        log.createLog("Vérification de la connection internet.");
         textLoad.setText("Vérification de la connection internet.");
 
         if(!MODE_PROGRAMMATEUR)
@@ -58,15 +62,16 @@ public class MainActivity extends AppCompatActivity implements PingAndInternetLi
     @Override
     public void executeAction()
     {
+        log.createLog("Vérification du fonctionnement des serveurs ...");
         textLoad.setText("Vérification du fonctionnement des serveurs ...");
 
-        // Ici l'id correspond aux serveurs
         startPing(id);
     }
 
     @Override
     public void noInternetConnexion()
     {
+        log.createLog("Aucune connexion internet détecté");
         // On ne peut venir dans cette fonction qu'à partir d'un thread
         // Pour éviter tout soucis, on attend que le thread termine pour effectué des changements
         new Handler(Looper.getMainLooper()).post(new Runnable(){
@@ -85,9 +90,9 @@ public class MainActivity extends AppCompatActivity implements PingAndInternetLi
     @SuppressLint("SetTextI18n")
     public void startPing(int numServeur)
     {
-        if(id == 0) { textLoad.setText("Attente d'une réponse du serveur SpeechToText");}
-        if(id == 1) { textLoad.setText("Attente d'une réponse du serveur DetectCommand");}
-        if(id == 2) { textLoad.setText("Attente d'une réponse du serveur AudioStreaming");}
+        if(id == 0) { textLoad.setText("Attente d'une réponse du serveur SpeechToText"); log.createLog("Attente d'une réponse du serveur SpeechToText");}
+        if(id == 1) { textLoad.setText("Attente d'une réponse du serveur DetectCommand"); log.createLog("Attente d'une réponse du serveur DetectCommand");}
+        if(id == 2) { textLoad.setText("Attente d'une réponse du serveur AudioStreaming"); log.createLog("Attente d'une réponse du serveur AudioStreaming");}
         new PingAndInternetAsync(this, MainActivity.this, numServeur).execute();
     }
 

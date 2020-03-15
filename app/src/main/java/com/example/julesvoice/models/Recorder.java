@@ -252,7 +252,7 @@ public class Recorder
         listeArguments.add(new ArgumentRequest("wav", encoded));
 
         ServerRequest requestSpeechToText = new ServerRequest(context, cb);
-        requestSpeechToText.getData(listeArguments, "http://pedago.univ-avignon.fr:3012/speechToText");
+        requestSpeechToText.getData(listeArguments, ServerRequest.URL_SERVER_SPEECH);
     }
 
     public boolean getIsRecording()

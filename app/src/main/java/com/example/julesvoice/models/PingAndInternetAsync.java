@@ -4,11 +4,14 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.example.julesvoice.interfaces.PingAndInternetListener;
 
 public class PingAndInternetAsync extends AsyncTask<Void, Void, Void>
 {
+    private LogApp log = LogApp.getInstance();
+    private static final String URL_PING_SPEECH = "http://192.168.42.157:8085";
     private PingAndInternetListener callback;
     private Context _context;
     private int _id;
@@ -28,21 +31,24 @@ public class PingAndInternetAsync extends AsyncTask<Void, Void, Void>
         ServerRequest serverSpeech = new ServerRequest(callback, _context, _id);
 
         if(_id == 0) {
-            serverSpeech.ping("http://pedago.univ-avignon.fr:3012/ping");
+            serverSpeech.ping(URL_PING_SPEECH);
         }
         else if(_id == 1) {
-            serverSpeech.ping("http://pedago.univ-avignon.fr:3012/ping");
+            serverSpeech.ping(URL_PING_SPEECH);
         }
         else if(_id == 2) {
-            serverSpeech.ping("http://pedago.univ-avignon.fr:3012/ping");
+            serverSpeech.ping(URL_PING_SPEECH);
         }
         else {
+            log.createLog("Test de la connexion internet");
             if(isNetworkAvailable())
             {
+                log.createLog("Aucune connexion internet");
                 callback.executeAction();
             }
             else
             {
+                log.createLog("Test de la connexion internet");
                 callback.noInternetConnexion();
             }
         }
