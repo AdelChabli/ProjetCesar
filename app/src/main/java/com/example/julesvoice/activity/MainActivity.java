@@ -26,7 +26,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 public class MainActivity extends AppCompatActivity implements PingAndInternetListener
 {
     private LogApp log = LogApp.getInstance();
-    private static final boolean MODE_PROGRAMMATEUR = true;
+    private static final boolean MODE_PROGRAMMATEUR = false;
     int maxServer = 3;
     private int id = 0;
     private TextView textLoad;
@@ -125,8 +125,8 @@ public class MainActivity extends AppCompatActivity implements PingAndInternetLi
     // Permet d'aller sur la page d'accueil
     private void changePage()
     {
-        //Intent i = new Intent(MainActivity.this,AccueilActivity.class);
-        Intent i = new Intent(MainActivity.this,LectureMusiqueActivity.class);
+        Intent i = new Intent(MainActivity.this,AccueilActivity.class);
+        //Intent i = new Intent(MainActivity.this,TransitionActivity.class);
         startActivity(i);
     }
 

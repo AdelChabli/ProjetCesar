@@ -17,11 +17,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.LectureMusiqueActivity"></activity>
+        <activity android:name=".activity.TransitionActivity"></activity>
+        <activity android:name=".activity.LectureMusiqueActivity" />
         <activity
             android:name=".activity.MainActivity"
             android:parentActivityName=".activity.MainActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="fullSensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,12 +33,12 @@
             android:name=".activity.AccueilActivity"
             android:label="Accueil"
             android:parentActivityName=".activity.AccueilActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="fullSensor" />
         <activity
             android:name=".activity.MusiqueActivity"
             android:label="Les musiques"
             android:parentActivityName=".activity.AccueilActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="fullSensor" />
     </application>
 
 </manifest>

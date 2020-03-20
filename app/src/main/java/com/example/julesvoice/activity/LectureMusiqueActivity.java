@@ -21,12 +21,16 @@ import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class LectureMusiqueActivity extends AppCompatActivity
 {
-    private static final String URL_MUSIC = "http://pedago.univ-avignon.fr:8085/streamVideo";
+    private static final String URL_MUSIC = "http://pedago.univ-avignon.fr:8085/streamAudio";
+    private static final String URL_VIDEO = "http://pedago.univ-avignon.fr:8085/streamVideo";
     private LogApp log = LogApp.getInstance();
     private SimpleExoPlayerView exoPlayerView;
     private SimpleExoPlayer exoPlayer;
+    private String typeStream;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,9 @@ public class LectureMusiqueActivity extends AppCompatActivity
 
         log.createLog("Dans LectureMusiqueActivity");
 
+        Bundle param = getIntent().getExtras();
+        typeStream = param.getString("type");
+
         exoPlayerView = findViewById(R.id.exoPlayerView);
 
         try{
@@ -42,7 +49,18 @@ public class LectureMusiqueActivity extends AppCompatActivity
             TrackSelector trackSelector = new DefaultTrackSelector(new AdaptiveTrackSelection.Factory(bandwidthMeter));
 
             exoPlayer = ExoPlayerFactory.newSimpleInstance(this, trackSelector);
-            Uri audioUri = Uri.parse(URL_MUSIC);
+
+            Uri audioUri;
+
+            if(typeStream.equals("musique"))
+            {
+                audioUri = Uri.parse(URL_MUSIC);
+            }
+            else
+            {
+                audioUri = Uri.parse(URL_VIDEO);
+            }
+
             DefaultHttpDataSourceFactory dataSourceFactory = new DefaultHttpDataSourceFactory("exoplayer_audio");
             ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
             MediaSource mediaSource = new ExtractorMediaSource(audioUri, dataSourceFactory, extractorsFactory, null, null);
@@ -56,6 +74,14 @@ public class LectureMusiqueActivity extends AppCompatActivity
         }
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(false);
+
+        exoPlayer.stop();
+        finish();
     }
 
 }

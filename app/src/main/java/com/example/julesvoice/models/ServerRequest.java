@@ -2,6 +2,7 @@ package com.example.julesvoice.models;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.icu.text.IDNA;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
@@ -25,8 +26,8 @@ public class ServerRequest
 {
     private LogApp log = LogApp.getInstance();
     public static final String LOG = "appLog";
-    //public static final String URL_SERVER_SPEECH= "http://pedago.univ-avignon.fr:3012/speechToText";
-    public static final String URL_SERVER_SPEECH = "http://localhost:8085/speechToText";
+    public static final String URL_SERVER_SPEECH= "http://pedago.univ-avignon.fr:3012/speechToText";
+    //public static final String URL_SERVER_SPEECH = "http://localhost:8085/speechToText";
     private Context _context;
     private PingAndInternetListener callback;
     private int _id;
@@ -68,10 +69,12 @@ public class ServerRequest
 
                 if(isNetworkAvailable())
                 {
+                    LogApp.getInstance().createLog("Ping a échoué !");
                     callback.onPingFailed();
                 }
                 else
                 {
+                    LogApp.getInstance().createLog("Aucune connexion internet ");
                     callback.noInternetConnexion();
                 }
             }
@@ -118,7 +121,7 @@ public class ServerRequest
             @Override
             public void onErrorResponse(VolleyError error)
             {
-                log.createLog("Ping échoué");
+                log.createLog("Ping échoué ");
                 callback.onPingFailed();
             }
         });

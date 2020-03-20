@@ -1,6 +1,6 @@
 // --------------------------- Déclaration de variables  ------------------------
 
-const port = 8085;
+const port = 3012;
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -31,7 +31,7 @@ app.get('/', (req, resp) =>
   resp.send("Bienvenu sur le serveur speech to text");
 });
 
-app.post('/ping', (req, resp) =>
+app.get('/ping', (req, resp) =>
 {
   console.log("Réponse à un ping");
   resp.send("pingBack");

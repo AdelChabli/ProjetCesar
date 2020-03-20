@@ -20,6 +20,7 @@ import androidx.core.app.ActivityCompat;
 
 import com.example.julesvoice.R;
 import com.example.julesvoice.interfaces.PingAndInternetListener;
+import com.example.julesvoice.models.LogApp;
 import com.example.julesvoice.models.Recorder;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -84,12 +85,14 @@ public class AccueilActivity extends AppCompatActivity implements PingAndInterne
             {
                 if(!isRecording)
                 {
+                    LogApp.getInstance().createLog("Lancement enregistrement");
                     buttonRecord.setImageResource(R.drawable.stop);
                     isRecording = true;
                     record.startRecording();
                 }
                 else
                 {
+                    LogApp.getInstance().createLog("Fin d'enregistrement");
                     buttonRecord.setImageResource(R.drawable.mic_48dp);
                     isRecording = false;
                     record.stopRecording(AccueilActivity.this);

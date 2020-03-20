@@ -11,7 +11,7 @@ import com.example.julesvoice.interfaces.PingAndInternetListener;
 public class PingAndInternetAsync extends AsyncTask<Void, Void, Void>
 {
     private LogApp log = LogApp.getInstance();
-    private static final String URL_PING_SPEECH = "http://192.168.42.157:8085";
+    private static final String URL_PING_SPEECH = "http://pedago.univ-avignon.fr:3012/ping";
     private PingAndInternetListener callback;
     private Context _context;
     private int _id;
@@ -31,6 +31,7 @@ public class PingAndInternetAsync extends AsyncTask<Void, Void, Void>
         ServerRequest serverSpeech = new ServerRequest(callback, _context, _id);
 
         if(_id == 0) {
+            LogApp.getInstance().createLog("Lancement ping à " + URL_PING_SPEECH );
             serverSpeech.ping(URL_PING_SPEECH);
         }
         else if(_id == 1) {

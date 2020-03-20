@@ -237,20 +237,26 @@ public class Recorder
     {
         // https://stackoverflow.com/questions/21601278/how-to-convert-a-file-to-base-64-like-pdf-txt-in-android
 
+        LogApp.getInstance().createLog("Fonction speechToText dans Recorder");
+
         File files = new File(OUTPUT_FILE);
 
         byte[] bytes = new byte[0];
         try {
             bytes = FileUtils.readFileToByteArray(files);
+            LogApp.getInstance().createLog("Transformation du fichier .wav en bytes");
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         String encoded = Base64.encodeToString(bytes, 0);
+        LogApp.getInstance().createLog("Conversion en base 64");
 
         ArrayList<ArgumentRequest> listeArguments = new ArrayList<>();
         listeArguments.add(new ArgumentRequest("wav", encoded));
 
+
+        LogApp.getInstance().createLog("Création de la requête à " + ServerRequest.URL_SERVER_SPEECH);
         ServerRequest requestSpeechToText = new ServerRequest(context, cb);
         requestSpeechToText.getData(listeArguments, ServerRequest.URL_SERVER_SPEECH);
     }
