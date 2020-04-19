@@ -4,9 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.example.julesvoice.R;
+import com.example.julesvoice.interfaces.PingAndInternetListener;
 import com.example.julesvoice.models.LogApp;
+import com.example.julesvoice.models.ServerRequest;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
@@ -23,14 +26,12 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class LectureMusiqueActivity extends AppCompatActivity
+public class LectureMusiqueActivity extends AppCompatActivity implements PingAndInternetListener
 {
-    private static final String URL_MUSIC = "http://pedago.univ-avignon.fr:8085/streamAudio";
-    private static final String URL_VIDEO = "http://pedago.univ-avignon.fr:8085/streamVideo";
+
     private LogApp log = LogApp.getInstance();
     private SimpleExoPlayerView exoPlayerView;
     private SimpleExoPlayer exoPlayer;
-    private String typeStream;
     private String titre;
 
     @Override
@@ -41,15 +42,22 @@ public class LectureMusiqueActivity extends AppCompatActivity
         log.createLog("Dans LectureMusiqueActivity");
 
         Bundle param = getIntent().getExtras();
-        typeStream = param.getString("type");
-
         titre = param.getString("titre");
 
-        titre = titre.replaceAll("\\s+","");
+        titre = titre.replaceAll("\\s+","_");
         titre = titre.toLowerCase();
+
+        //https://www.youtube.com/watch?v=coIAggOC2OI pour l'utilisation de exo player
 
         exoPlayerView = findViewById(R.id.exoPlayerView);
 
+        ServerRequest serverRequest = new ServerRequest(this, this);
+        serverRequest.requestExistFile(titre);
+
+    }
+
+    private void lancerLeStream(String type)
+    {
         try{
             BandwidthMeter bandwidthMeter =  new DefaultBandwidthMeter();
             TrackSelector trackSelector = new DefaultTrackSelector(new AdaptiveTrackSelection.Factory(bandwidthMeter));
@@ -58,14 +66,7 @@ public class LectureMusiqueActivity extends AppCompatActivity
 
             Uri audioUri;
 
-            if(typeStream.equals("musique"))
-            {
-                audioUri = Uri.parse(URL_MUSIC+"/"+titre);
-            }
-            else
-            {
-                audioUri = Uri.parse(URL_VIDEO);
-            }
+            audioUri = Uri.parse(ServerRequest.URL_SERVER_STREAM +"/"+titre+"/"+type);
 
             DefaultHttpDataSourceFactory dataSourceFactory = new DefaultHttpDataSourceFactory("exoplayer_audio");
             ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
@@ -78,8 +79,6 @@ public class LectureMusiqueActivity extends AppCompatActivity
         {
             e.printStackTrace();
         }
-
-
     }
 
     @Override
@@ -90,4 +89,27 @@ public class LectureMusiqueActivity extends AppCompatActivity
         finish();
     }
 
+    @Override
+    public void onPingCompleted() {
+
+    }
+
+    @Override
+    public void onPingFailed() {
+
+    }
+
+    @Override
+    public void executeAction(String response)
+    {
+        lancerLeStream(response);
+    }
+
+    @Override
+    public void noInternetConnexion()
+    {
+        String leTitre = titre.replaceAll("_"," ");
+        Toast.makeText(this, "Impossible de lancer \"" + leTitre + "\".", Toast.LENGTH_LONG).show();
+        finish();
+    }
 }

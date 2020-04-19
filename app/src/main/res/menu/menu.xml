@@ -7,4 +7,10 @@
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_lib_music_24"/>
 
+    <item
+        android:id="@+id/action_video"
+        android:title="Today"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_video_24dp"/>
+
 </menu>

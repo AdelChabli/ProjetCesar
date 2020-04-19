@@ -31,14 +31,28 @@
       resp.send("pingBack");
     });
 
-    app.get('/streamAudio/:titre', function (req, resp)
+    app.get('/streamAudio/:titre/:type', function (req, resp)
     {
         console.log("Titre = " + req.params.titre);
+        console.log("Type = " + req.params.type);
 
         var titre = req.params.titre;
-        var music = path.join(__dirname, 'musique', req.params.titre +'.mp3');
+        var type = req.params.type;
 
-        mediaserver.pipe(req, resp, music);
+        titre = titre.split("_").join(" ");
+
+        var file = "";
+
+        if(type == "musique")
+        {
+            file = path.join(__dirname, 'musique', titre +'.mp3');
+        }
+        else
+        {
+            file = path.join(__dirname, 'video', titre +'.mp4');
+        }
+
+        mediaserver.pipe(req, resp, file);
     });
 
     app.get('/streamVideo', function (req, resp)
@@ -48,3 +62,74 @@
 
         mediaserver.pipe(req, resp, video);
     });
+
+    app.get('/fileExist/:titre', function(req, resp)
+    {
+        var titre = req.params.titre;
+
+        titre = titre.split("_").join(" ");
+
+        var pathMusique = './musique/'+titre+'.mp3';
+        var pathVideo = './video/'+titre+'.mp4';
+
+        if (fs.existsSync(pathMusique)) {
+            return resp.send("musique");
+        }
+
+        if (fs.existsSync(pathVideo)) {
+            return resp.send("video");
+        }
+
+        console.log("Fichier " + titre + " non trouvé");
+        return resp.send("no");
+    });
+
+    app.get('/getAllMusic', function(req, resp)
+    {
+        var musicPath = path.join(__dirname, 'musique');
+        var theFiles = "";
+
+        fs.readdir(musicPath, function (err, files)
+        {
+            files.forEach(function (file) {
+                console.log(file);
+                file = file.split(".mp3").join("");
+                theFiles = theFiles + file + "_";
+            });
+
+            theFiles = theFiles.substring(0, theFiles.length - 1);
+
+            resp.send(theFiles);
+        });
+    });
+
+    app.get('/getAllVideo', function(req, resp)
+        {
+            var musicPath = path.join(__dirname, 'video');
+            var theFiles = "";
+
+            fs.readdir(musicPath, function (err, files)
+            {
+                files.forEach(function (file) {
+                    console.log(file);
+                    file = file.split(".mp4").join("");
+                    theFiles = theFiles + file + "_";
+                });
+
+                theFiles = theFiles.substring(0, theFiles.length - 1);
+
+                resp.send(theFiles);
+            });
+        });
+
+
+    function fileExist(filePath) {
+     return new Promise((resolve, reject) => {
+       fs.access(filePath, fs.F_OK, (err) => {
+         if (err) {
+           return false;
+        }
+         return true;
+       })
+     });
+    }

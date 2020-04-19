@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -41,6 +42,7 @@ public class AccueilActivity extends AppCompatActivity implements PingAndInterne
 {
     private static final String TOOLBAR_TITLE = "César assistant";
     private static final int TOOLBAR_COLOR = Color.WHITE;
+    private final Context theContext = this;
 
     private Toolbar toolbar;
     private ImageButton buttonRecord = null;
@@ -48,6 +50,7 @@ public class AccueilActivity extends AppCompatActivity implements PingAndInterne
     private Recorder record = new Recorder(AccueilActivity.this);
     private final Context mContext = this;
     private final PingAndInternetListener callbackk = AccueilActivity.this;
+
 
     // Requête de permission d'enregistrer
     private boolean permissionToRecordAccepted = false;
@@ -132,6 +135,14 @@ public class AccueilActivity extends AppCompatActivity implements PingAndInterne
             return true;
         }
 
+        if(id == R.id.action_video)
+        {
+            Intent i = new Intent(AccueilActivity.this,VideoActivity.class);
+            startActivity(i);
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -204,10 +215,42 @@ public class AccueilActivity extends AppCompatActivity implements PingAndInterne
                     LogApp.getInstance().createLog("Action = " + jsonObject.get("action"));
                     LogApp.getInstance().createLog("commande = " + jsonObject.getString("commande"));
 
-                    Intent i = new Intent(AccueilActivity.this, LectureMusiqueActivity.class);
-                    i.putExtra("type", "musique");
-                    i.putExtra("titre", jsonObject.getString("commande"));
-                    startActivity(i);
+                    if(jsonObject.getString("action").equals("son"))
+                    {
+                        AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+                        int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+
+                        if(jsonObject.getString("commande").equals("monter"))
+                        {
+                            int volume = currentVolume + 1;
+                            audioManager.setStreamVolume(
+                                    AudioManager.STREAM_MUSIC,
+                                    volume,
+                                    AudioManager.FLAG_SHOW_UI
+                            );
+                        }
+                        else
+                        {
+                            int volume = currentVolume - 1;
+                            audioManager.setStreamVolume(
+                                    AudioManager.STREAM_MUSIC,
+                                    volume,
+                                    AudioManager.FLAG_SHOW_UI
+                            );
+                        }
+                    }
+                    else if(jsonObject.getString("action").equals("stream"))
+                    {
+                        Intent i = new Intent(AccueilActivity.this, LectureMusiqueActivity.class);
+                        i.putExtra("type", "musique");
+                        i.putExtra("titre", jsonObject.getString("commande"));
+                        startActivity(i);
+                    }
+                    else
+                    {
+                        Toast.makeText(theContext,"Votre commande n'existe pas : " + jsonObject.getString("commande"),Toast.LENGTH_LONG).show();
+                    }
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();

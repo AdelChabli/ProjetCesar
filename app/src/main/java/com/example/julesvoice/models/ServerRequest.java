@@ -24,11 +24,20 @@ import java.util.Map;
 
 public class ServerRequest
 {
+
     private LogApp log = LogApp.getInstance();
     public static final String LOG = "appLog";
-    public static final String URL_SERVER_SPEECH= "http://pedago.univ-avignon.fr:3012/speechToText";
-    public static final String URL_SERVER_COMMAND = "http://pedago.univ-avignon.fr:3013/getSpeech";
-    public static final String URL_SERVER_STREAM = "http://pedago.univ-avignon.fr:8085/streamAudio";
+    public static final String IP_LOCALHOST = "192.168.0.19";
+    //public static final String URL_SERVER_SPEECH= "http://pedago.univ-avignon.fr:3012/speechToText";
+    public static final String URL_SERVER_SPEECH= "http://" + IP_LOCALHOST +":3012/speechToText";
+    //public static final String URL_SERVER_COMMAND = "http://pedago.univ-avignon.fr:3013/getSpeech";
+    public static final String URL_SERVER_COMMAND = "http://"+ IP_LOCALHOST + ":8080/exo/getSpeech";
+    //public static final String URL_SERVER_STREAM = "http://pedago.univ-avignon.fr:8085/streamAudio";
+    public static final String URL_SERVER_STREAM = "http://" + IP_LOCALHOST + ":8085/streamAudio";
+    public static final String URL_SERVER_EXIST = "http://" + IP_LOCALHOST + ":8085/fileExist";
+    public static final String URL_GET_MUSIC = "http://" + IP_LOCALHOST + ":8085/getAllMusic";
+    public static final String URL_GET_VIDEO = "http://" + IP_LOCALHOST + ":8085/getAllVideo";
+    public static final String URL_SERVER_STREAM_VIDEO = "http://" + IP_LOCALHOST + ":8085/streamVideo";
     private Context _context;
     private PingAndInternetListener callback;
     private int _id;
@@ -89,10 +98,14 @@ public class ServerRequest
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                for(ArgumentRequest r : parametre)
+
+                if(parametre != null)
                 {
-                    params.put(r.getKey(), r.getValeur());
-                    //params.put("wav", wavInBase64);
+                    for(ArgumentRequest r : parametre)
+                    {
+                        params.put(r.getKey(), r.getValeur());
+                        //params.put("wav", wavInBase64);
+                    }
                 }
 
                 return params;
@@ -173,6 +186,90 @@ public class ServerRequest
                 }
                 else{
                     Toast.makeText(_context, "Transcription impossible, veuillez recommencer.", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                if(isNetworkAvailable())
+                {
+                    LogApp.getInstance().createLog("Ping a échoué !");
+                    callback.onPingFailed();
+                }
+                else
+                {
+                    LogApp.getInstance().createLog("Aucune connexion internet ");
+                    callback.noInternetConnexion();
+                }
+            }
+        });
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(5000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        RequestQueue requestQueue = Volley.newRequestQueue(_context);
+        requestQueue.add(stringRequest);
+    }
+
+    public void getFile(String url)
+    {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                if(response != null && !response.trim().isEmpty())
+                {
+                    callback.executeAction(response);
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                if(isNetworkAvailable())
+                {
+                    LogApp.getInstance().createLog("Erreur serveur");
+                    callback.onPingFailed();
+                }
+                else
+                {
+                    LogApp.getInstance().createLog("Aucune connexion internet ");
+                    callback.noInternetConnexion();
+                }
+            }
+        });
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(5000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        RequestQueue requestQueue = Volley.newRequestQueue(_context);
+        requestQueue.add(stringRequest);
+    }
+
+    public void requestExistFile(String titre)
+    {
+
+        titre = titre.replaceAll("\\s+","");
+
+        titre = titre.toLowerCase();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_SERVER_EXIST + "/" + titre, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                if(response != null && !response.trim().isEmpty())
+                {
+                    if(response.equals("no"))
+                    {
+                        callback.noInternetConnexion();
+                    }
+                    else
+                    {
+                        callback.executeAction(response);
+                    }
+
                 }
 
             }

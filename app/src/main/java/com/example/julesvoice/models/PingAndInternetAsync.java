@@ -1,5 +1,6 @@
 package com.example.julesvoice.models;
 
+import android.app.Service;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -11,9 +12,12 @@ import com.example.julesvoice.interfaces.PingAndInternetListener;
 public class PingAndInternetAsync extends AsyncTask<Void, Void, Void>
 {
     private LogApp log = LogApp.getInstance();
-    private static final String URL_PING_SPEECH = "http://pedago.univ-avignon.fr:3012/ping";
-    private static final String URL_PING_COMMAND = "http://pedago.univ-avignon.fr:3013/ping";
-    private static final String URL_PING_STREAM = "http://pedago.univ-avignon.fr:8085/ping";
+    //private static final String URL_PING_SPEECH = "http://pedago.univ-avignon.fr:3012/ping";
+    private static final String URL_PING_SPEECH = "http://" + ServerRequest.IP_LOCALHOST + ":3012/ping";
+    //private static final String URL_PING_COMMAND = "http://pedago.univ-avignon.fr:3013/ping";
+    private static final String URL_PING_COMMAND = "http://" + ServerRequest.IP_LOCALHOST + ":8080/exo/ping";
+    //private static final String URL_PING_STREAM = "http://pedago.univ-avignon.fr:8085/ping";
+    private static final String URL_PING_STREAM = "http://"+ ServerRequest.IP_LOCALHOST +":8085/ping";
     private PingAndInternetListener callback;
     private Context _context;
     private int _id;
