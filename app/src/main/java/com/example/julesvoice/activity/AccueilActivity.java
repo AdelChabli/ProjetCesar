@@ -1,6 +1,7 @@
 package com.example.julesvoice.activity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -12,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,8 +22,15 @@ import androidx.core.app.ActivityCompat;
 
 import com.example.julesvoice.R;
 import com.example.julesvoice.interfaces.PingAndInternetListener;
+import com.example.julesvoice.models.ArgumentRequest;
 import com.example.julesvoice.models.LogApp;
 import com.example.julesvoice.models.Recorder;
+import com.example.julesvoice.models.ServerRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -37,6 +46,8 @@ public class AccueilActivity extends AppCompatActivity implements PingAndInterne
     private ImageButton buttonRecord = null;
     private boolean isRecording = false;
     private Recorder record = new Recorder(AccueilActivity.this);
+    private final Context mContext = this;
+    private final PingAndInternetListener callbackk = AccueilActivity.this;
 
     // Requête de permission d'enregistrer
     private boolean permissionToRecordAccepted = false;
@@ -180,13 +191,27 @@ public class AccueilActivity extends AppCompatActivity implements PingAndInterne
     }
 
     @Override
-    public void executeAction()
+    public void executeAction(final String response)
     {
         new Handler(Looper.getMainLooper()).post(new Runnable(){
             @Override
             public void run()
             {
+                try
+                {
+                    JSONObject jsonObject = new JSONObject(response);
 
+                    LogApp.getInstance().createLog("Action = " + jsonObject.get("action"));
+                    LogApp.getInstance().createLog("commande = " + jsonObject.getString("commande"));
+
+                    Intent i = new Intent(AccueilActivity.this, LectureMusiqueActivity.class);
+                    i.putExtra("type", "musique");
+                    i.putExtra("titre", jsonObject.getString("commande"));
+                    startActivity(i);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

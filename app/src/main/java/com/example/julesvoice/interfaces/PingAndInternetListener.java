@@ -6,6 +6,6 @@ public interface PingAndInternetListener
 {
     public void onPingCompleted();
     public void onPingFailed();
-    public void executeAction();
+    public void executeAction(final String response);
     public void noInternetConnexion();
 }

@@ -1,6 +1,6 @@
     // --------------------------- Déclaration de variables  ------------------------
 
-    const port = 8085;
+    const port = 3013;
     const express = require('express');
     const app = express();
     const bodyParser = require('body-parser');
@@ -22,13 +22,35 @@
     app.use(bodyParser.json({limit:'50mb'}));
 
     // Requête post de ping
-    app.post('/ping', (req, resp) =>
+    app.get('/ping', (req, resp) =>
     {
       console.log("Réponse à un ping");
       resp.send("pingBack");
     });
 
-    app.get('/getAction', function (req, resp)
+    app.post('/getSpeech', function (req, resp)
     {
+        var speechtxt = req.body.speech;
 
+        console.log(speechtxt);
+
+        if(speechtxt.includes('joue') || speechtxt.includes('lance') || speechtxt.includes('écoute'))
+        {
+            responseData.action = "musique";
+
+            console.log("Action = lancer une musique");
+
+            if(speechtxt.includes("musique"))
+            {
+                console.log("titre = " + speechtxt.substring(speechtxt.lastIndexOf("musique") + 8, speechtxt.length));
+                responseData.commande = speechtxt.substring(speechtxt.lastIndexOf("musique") + 8, speechtxt.length);
+            }
+            else if(speechtxt.includes("écouter"))
+            {
+                console.log("titre = " + speechtxt.substring(speechtxt.lastIndexOf("écouter") + 8, speechtxt.length));
+                responseData.commande = speechtxt.substring(speechtxt.lastIndexOf("écouter") + 8, speechtxt.length);
+            }
+        }
+
+        resp.json(responseData);
     });

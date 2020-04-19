@@ -31,6 +31,7 @@ public class LectureMusiqueActivity extends AppCompatActivity
     private SimpleExoPlayerView exoPlayerView;
     private SimpleExoPlayer exoPlayer;
     private String typeStream;
+    private String titre;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,11 @@ public class LectureMusiqueActivity extends AppCompatActivity
 
         Bundle param = getIntent().getExtras();
         typeStream = param.getString("type");
+
+        titre = param.getString("titre");
+
+        titre = titre.replaceAll("\\s+","");
+        titre = titre.toLowerCase();
 
         exoPlayerView = findViewById(R.id.exoPlayerView);
 
@@ -54,7 +60,7 @@ public class LectureMusiqueActivity extends AppCompatActivity
 
             if(typeStream.equals("musique"))
             {
-                audioUri = Uri.parse(URL_MUSIC);
+                audioUri = Uri.parse(URL_MUSIC+"/"+titre);
             }
             else
             {

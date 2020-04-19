@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements PingAndInternetLi
     // Si le teste de la connexion est bon, on lance les pings aux serveurs
     @SuppressLint("SetTextI18n")
     @Override
-    public void executeAction()
+    public void executeAction(String ffzfer)
     {
         log.createLog("Vérification du fonctionnement des serveurs ...");
         textLoad.setText("Vérification du fonctionnement des serveurs ...");
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements PingAndInternetLi
 
         id++;
         if(id < maxServer) {
-            startPing(0);
+            startPing(id);
         }
         else {
             changePage();

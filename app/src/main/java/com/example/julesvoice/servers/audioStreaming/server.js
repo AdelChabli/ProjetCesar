@@ -25,16 +25,18 @@
     app.use(bodyParser.json({limit:'50mb'}));
 
     // Requête post de ping
-    app.post('/ping', (req, resp) =>
+    app.get('/ping', (req, resp) =>
     {
       console.log("Réponse à un ping");
       resp.send("pingBack");
     });
 
-    app.get('/streamAudio', function (req, resp)
+    app.get('/streamAudio/:titre', function (req, resp)
     {
-        console.log("Musique envoyée");
-        var music = path.join(__dirname, 'musique', 'stand.mp3');
+        console.log("Titre = " + req.params.titre);
+
+        var titre = req.params.titre;
+        var music = path.join(__dirname, 'musique', req.params.titre +'.mp3');
 
         mediaserver.pipe(req, resp, music);
     });

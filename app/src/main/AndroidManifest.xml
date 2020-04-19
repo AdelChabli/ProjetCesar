@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.julesvoice">
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -18,11 +19,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.TransitionActivity"></activity>
-        <activity android:name=".activity.LectureMusiqueActivity" />
+        <activity android:name=".activity.LectureMusiqueActivity"
+            android:parentActivityName=".activity.MainActivity"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            tools:ignore="LockedOrientationActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.MainActivity"
             android:parentActivityName=".activity.MainActivity"
-            android:screenOrientation="fullSensor">
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            tools:ignore="LockedOrientationActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,12 +40,16 @@
             android:name=".activity.AccueilActivity"
             android:label="Accueil"
             android:parentActivityName=".activity.AccueilActivity"
-            android:screenOrientation="fullSensor" />
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            tools:ignore="LockedOrientationActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MusiqueActivity"
             android:label="Les musiques"
             android:parentActivityName=".activity.AccueilActivity"
-            android:screenOrientation="fullSensor" />
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            tools:ignore="LockedOrientationActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

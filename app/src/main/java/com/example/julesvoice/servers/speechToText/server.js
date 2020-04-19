@@ -1,5 +1,8 @@
 // --------------------------- Déclaration de variables  ------------------------
 
+// export GOOGLE_APPLICATION_CREDENTIALS="/nfs/nas02a_etudiants/inf/uapv1703397/public_html/Reenddddduuuu2/ArchitectureApplicative-ee1e353fc90a.json"
+
+
 const port = 3012;
 const express = require('express');
 const app = express();

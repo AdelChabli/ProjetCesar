@@ -12,6 +12,8 @@ public class PingAndInternetAsync extends AsyncTask<Void, Void, Void>
 {
     private LogApp log = LogApp.getInstance();
     private static final String URL_PING_SPEECH = "http://pedago.univ-avignon.fr:3012/ping";
+    private static final String URL_PING_COMMAND = "http://pedago.univ-avignon.fr:3013/ping";
+    private static final String URL_PING_STREAM = "http://pedago.univ-avignon.fr:8085/ping";
     private PingAndInternetListener callback;
     private Context _context;
     private int _id;
@@ -35,17 +37,18 @@ public class PingAndInternetAsync extends AsyncTask<Void, Void, Void>
             serverSpeech.ping(URL_PING_SPEECH);
         }
         else if(_id == 1) {
-            serverSpeech.ping(URL_PING_SPEECH);
+            LogApp.getInstance().createLog("Lancement ping à " + URL_PING_COMMAND );
+            serverSpeech.ping(URL_PING_COMMAND);
         }
         else if(_id == 2) {
-            serverSpeech.ping(URL_PING_SPEECH);
+            serverSpeech.ping(URL_PING_STREAM);
         }
         else {
             log.createLog("Test de la connexion internet");
             if(isNetworkAvailable())
             {
                 log.createLog("Aucune connexion internet");
-                callback.executeAction();
+                callback.executeAction("");
             }
             else
             {
