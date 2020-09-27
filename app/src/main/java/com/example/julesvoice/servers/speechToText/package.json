@@ -25,7 +25,7 @@
     "ip": "^1.1.5",
     "local-storage": "^2.0.0",
     "moment": "^2.24.0",
-    "mongoose": "^5.7.1",
+    "mongoose": "^5.7.5",
     "multer": "^1.4.2",
     "node-wit": "^5.0.0",
     "node-witai-speech": "^1.0.2",
